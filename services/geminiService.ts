@@ -1,9 +1,17 @@
 import { GoogleGenAI } from "@google/genai";
 import { PropertyDetails } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const analyzePropertySuitability = async (details: PropertyDetails): Promise<string> => {
+  // Initialize AI client inside the function to prevent load-time crashes if process.env is missing
+  // This allows the app to load even if the key isn't configured yet
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey) {
+    console.warn("API_KEY is missing from process.env");
+    return "Demo Result: System in preview mode. Please configure API_KEY in environment variables for live analysis.";
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   const model = "gemini-3-flash-preview";
   
   const prompt = `

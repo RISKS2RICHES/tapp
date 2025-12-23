@@ -16,8 +16,13 @@ const AIConsultant: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!process.env.API_KEY) {
-        alert("Demo Mode: API Key not configured. Please add API_KEY to environment variables to use real AI.");
+    
+    // Check if process is defined and key exists (safeguard for browser environments)
+    const hasKey = typeof process !== 'undefined' && process.env && process.env.API_KEY;
+
+    if (!hasKey) {
+        // Fallback for demo/preview if no key is set
+        alert("Demo Mode: API Key not configured in environment variables. Showing sample data.");
         setResult("**Demo Result**: Based on your location in Manchester, a 2-bed terraced house is in **High Demand**. Estimated rent: £850-£950pcm. Verdict: **High Suitability**.");
         return;
     }

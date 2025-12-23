@@ -7,6 +7,9 @@
     <link rel="icon" href="https://pub-35faf01d0bac49249f374189fd3a24d9.r2.dev/images/1766527091344-3a83e96d-6e6e-4d35-af77-4b997b9c0138.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+      // Polyfill process for browser environment to prevent crashes
+      window.process = window.process || { env: { API_KEY: '' } };
+      
       tailwind.config = {
         theme: {
           extend: {
@@ -48,6 +51,7 @@
     "react": "https://esm.sh/react@^19.2.3",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
     "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
@@ -56,5 +60,6 @@
 </head>
   <body class="bg-white text-slate-900 antialiased selection:bg-brand-blue selection:text-brand-black">
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
